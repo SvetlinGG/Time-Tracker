@@ -1,2 +1,2 @@
 # Time-Tracker
-Angular21/NodeJS/Express/MongpDB
+Angular / NodeJS / Express / MongoDB
