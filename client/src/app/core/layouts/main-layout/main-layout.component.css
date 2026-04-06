@@ -1,0 +1,55 @@
+.layout {
+    display: flex;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+  }
+  
+  .sidebar {
+    width: 220px;
+    background: #1e293b;
+    color: white;
+    padding: 20px;
+  
+    .logo {
+      margin-bottom: 30px;
+    }
+  
+    nav {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+  
+      a {
+        color: #cbd5f5;
+        text-decoration: none;
+        padding: 10px;
+        border-radius: 6px;
+  
+        &:hover {
+          background: #334155;
+        }
+  
+        &.active {
+          background: #3b82f6;
+          color: white;
+        }
+      }
+    }
+  }
+  
+  .main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .header {
+    background: #f1f5f9;
+    padding: 15px 20px;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  
+  .content {
+    padding: 20px;
+    overflow-y: auto;
+  }
