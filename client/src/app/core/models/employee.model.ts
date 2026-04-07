@@ -1,4 +1,6 @@
 
+export type ContractType = 'hourly' | 'monthly' | 'shift';
+
 export interface Employee {
     _id: string;
     firstName: string;
@@ -6,10 +8,25 @@ export interface Employee {
     personalNumber: string;
     departmentId: string;
     hourlyRate: number;
-    contractType: 'hourly' | 'monthly' | 'shift';
+    contractType: ContractType;
     standardDailyHours: number;
     isActive: boolean;
     hireDate: string;
     createdAt?: string;
     updatedAt?: string;
 }
+
+export interface CreateEmployeeDto {
+    firstName: string;
+    lastName: string;
+    personalNumber: string;
+    position: string;
+    department?: string;
+    hourlyRate: number;
+    contractType: ContractType;
+    standardDailyHours: number;
+    isActive: boolean;
+    hireDate: string;
+}
+
+export interface UpdateEmployeeDto extends Partial<CreateEmployeeDto>{}
