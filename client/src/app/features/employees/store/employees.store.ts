@@ -90,11 +90,26 @@ export class EmployeesStore {
                     );
                     onSuccess?.();
                 },
-                error: () => this._error.set('Failed to update employee.')
+                error: () => this._error.set('Failed to update employee.'),
             });
     }
 
-    
+    deleteEmployee(id: string): void {
+        this._loading.set(true);
+        this._error.set(null);
+
+        this.employeesService
+            .delete(id)
+            .pipe(finalize(() => this._loading.set(false)))
+            .subscribe({
+                next: () => {
+                    this._employees.update(list =>
+                        list.filter(employee => employee._id !== id)
+                    );
+                },
+                error: () => this._error.set('Failed to delete employee.'),
+            });
+    }
 
 
 }
