@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CreateEmployeeDto, Employee } from '../../../core/models/employee.model';
+import { CreateEmployeeDto, Employee, UpdateEmployeeDto } from '../../../core/models/employee.model';
 
 @Injectable({providedIn: 'root'})
 export class EmployeesService {
@@ -21,7 +21,7 @@ export class EmployeesService {
     return this.http.post<Employee>(this.baseUrl, payload)
   }
 
-  update(id: string, payload: CreateEmployeeDto): Observable<Employee>{
+  update(id: string, payload: UpdateEmployeeDto): Observable<Employee>{
     return this.http.put<Employee>(`${this.baseUrl}/${id}`, payload)
   }
 
