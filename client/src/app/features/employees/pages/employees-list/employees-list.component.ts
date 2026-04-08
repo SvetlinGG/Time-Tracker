@@ -28,7 +28,16 @@ export class EmployeesListComponent implements OnInit {
     if(!term){
       return this.employees();
     }
-  })
+    return this.employees().filter(employee => {
+      const fullName = `${employee.firstName} ${employee.lastName}`.toLowerCase();
+
+      return(
+        fullName.includes(term) ||
+        employee.personalNumber.toLowerCase().includes
+      )
+    })
+
+  });
 
     
   
@@ -51,8 +60,9 @@ export class EmployeesListComponent implements OnInit {
     if (!confirmed){
       return;
     }
+    this.store.deleteEmployee(employee._id);
   }
-
-
-
+  trackByEmployeeId(_: number, employee: Employee): string{
+     return employee._id;
+  }
 }
