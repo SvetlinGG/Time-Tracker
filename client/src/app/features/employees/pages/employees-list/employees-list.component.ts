@@ -33,14 +33,14 @@ export class EmployeesListComponent implements OnInit {
 
       return(
         fullName.includes(term) ||
-        employee.personalNumber.toLowerCase().includes
+        employee.personalNumber.toLowerCase().includes(term) ||
+       employee.position.toLowerCase().includes(term) ||
+       (employee.department ?? '').toLowerCase().includes(term)
       )
-    })
+    });
 
   });
 
-    
-  
   ngOnInit(): void {
     this.store.loadEmployees();
   }

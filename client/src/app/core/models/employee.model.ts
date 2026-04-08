@@ -6,6 +6,8 @@ export interface Employee {
     firstName: string;
     lastName: string;
     personalNumber: string;
+    position: string;
+    department?: string;
     departmentId: string;
     hourlyRate: number;
     contractType: ContractType;
