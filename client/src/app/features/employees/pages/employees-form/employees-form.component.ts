@@ -29,7 +29,11 @@ export class EmployeesFormComponent implements OnInit {
     firstName: ['', [Validators.required, Validators.minLength(2)]],
     lastName: ['', Validators.required, Validators.minLength(2)],
     personalNumber: ['', Validators.required, Validators.minLength(3)],
-    
+    position: ['', [Validators.required]],
+    department: [''],
+    hourlyRate: [0, [Validators.required, Validators.min(0)]],
+    contractType: ['hourly' as ContractType, [Validators.required]],
+    standardDailyHours: []
   })
   
 }
