@@ -1,1 +1,76 @@
-<p>employees-list works!</p>
+<div class="employees-page">
+    <div class="page-header">
+      <div>
+        <h2>Employees</h2>
+        <p>Manage employee records, rates and contract data.</p>
+      </div>
+  
+      <a class="add-btn" routerLink="/employees/new">Add Employee</a>
+    </div>
+  
+    <div class="toolbar">
+      <input
+        type="text"
+        placeholder="Search by name, personal number, position..."
+        [value]="searchTerm()"
+        (input)="onSearch($any($event.target).value)"
+      />
+    </div>
+  
+    @if (loading()) {
+      <div class="state-box">Loading employees...</div>
+    }
+  
+    @if (error()) {
+      <div class="state-box error">{{ error() }}</div>
+    }
+  
+    @if (!loading() && !error()) {
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Personal No.</th>
+              <th>Position</th>
+              <th>Department</th>
+              <th>Rate</th>
+              <th>Contract</th>
+              <th>Status</th>
+              <th class="actions-col">Actions</th>
+            </tr>
+          </thead>
+  
+          <tbody>
+            @for (employee of filteredEmployees(); track trackByEmployeeId($index, employee)) {
+              <tr>
+                <td>{{ employee.firstName }} {{ employee.lastName }}</td>
+                <td>{{ employee.personalNumber }}</td>
+                <td>{{ employee.position }}</td>
+                <td>{{ employee.department || '-' }}</td>
+                <td>{{ employee.hourlyRate | number:'1.2-2' }}</td>
+                <td>{{ employee.contractType }}</td>
+                <td>
+                  <span class="badge" [class.inactive]="!employee.isActive">
+                    {{ employee.isActive ? 'Active' : 'Inactive' }}
+                  </span>
+                </td>
+                <td class="actions">
+                  <button type="button" class="edit-btn" (click)="onEdit(employee)">
+                    Edit
+                  </button>
+                  <button type="button" class="delete-btn" (click)="onDelete(employee)">
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="8" class="empty-cell">No employees found.</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
