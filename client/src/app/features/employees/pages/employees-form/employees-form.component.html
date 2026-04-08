@@ -1,1 +1,102 @@
-<p>employees-form works!</p>
+<div class="employee-form-page">
+    <div class="page-header">
+      <div>
+        <h2>{{ isEditMode() ? 'Edit Employee' : 'Add Employee' }}</h2>
+        <p>Enter the employee details below.</p>
+      </div>
+  
+      <a class="back-link" routerLink="/employees">Back to Employees</a>
+    </div>
+  
+    @if (error()) {
+      <div class="error-box">{{ error() }}</div>
+    }
+  
+    <form class="employee-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="grid">
+        <div class="form-field">
+          <label>First Name</label>
+          <input type="text" formControlName="firstName" />
+          @if (hasError('firstName')) {
+            <small>First name is required.</small>
+          }
+        </div>
+  
+        <div class="form-field">
+          <label>Last Name</label>
+          <input type="text" formControlName="lastName" />
+          @if (hasError('lastName')) {
+            <small>Last name is required.</small>
+          }
+        </div>
+  
+        <div class="form-field">
+          <label>Personal Number</label>
+          <input type="text" formControlName="personalNumber" />
+          @if (hasError('personalNumber')) {
+            <small>Personal number is required.</small>
+          }
+        </div>
+  
+        <div class="form-field">
+          <label>Position</label>
+          <input type="text" formControlName="position" />
+          @if (hasError('position')) {
+            <small>Position is required.</small>
+          }
+        </div>
+  
+        <div class="form-field">
+          <label>Department</label>
+          <input type="text" formControlName="department" />
+        </div>
+  
+        <div class="form-field">
+          <label>Hourly Rate</label>
+          <input type="number" formControlName="hourlyRate" />
+          @if (hasError('hourlyRate')) {
+            <small>Hourly rate must be 0 or higher.</small>
+          }
+        </div>
+  
+        <div class="form-field">
+          <label>Contract Type</label>
+          <select formControlName="contractType">
+            @for (type of contractTypes; track type) {
+              <option [value]="type">{{ type }}</option>
+            }
+          </select>
+        </div>
+  
+        <div class="form-field">
+          <label>Standard Daily Hours</label>
+          <input type="number" formControlName="standardDailyHours" />
+          @if (hasError('standardDailyHours')) {
+            <small>Standard daily hours must be at least 1.</small>
+          }
+        </div>
+  
+        <div class="form-field">
+          <label>Hire Date</label>
+          <input type="date" formControlName="hireDate" />
+          @if (hasError('hireDate')) {
+            <small>Hire date is required.</small>
+          }
+        </div>
+  
+        <div class="form-field checkbox-field">
+          <label>
+            <input type="checkbox" formControlName="isActive" />
+            Active Employee
+          </label>
+        </div>
+      </div>
+  
+      <div class="form-actions">
+        <a class="cancel-btn" routerLink="/employees">Cancel</a>
+        <button type="submit" class="submit-btn" [disabled]="submitting()">
+          {{ submitting() ? 'Saving...' : (isEditMode() ? 'Update Employee' : 'Create Employee') }}
+        </button>
+      </div>
+    </form>
+  </div>
