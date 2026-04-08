@@ -82,7 +82,24 @@ export class EmployeesFormComponent implements OnInit {
       ),
       isActive: this.form.controls.isActive.getRawValue(),
       hireDate: this.form.controls.hireDate.getRawValue(),
+    };
+
+    const id = this.employeeId();
+
+    if(id){
+      this.store.updateEmployee(id, payload, () => {
+        this.router.navigate(['/employees'])
+      });
+      return;
     }
+    this.store.createEmployee(payload, () => {
+      this.router.navigate(['/employees']);
+    });
+  }
+
+  hasError(controlName: keyof typeof this.form.controls): boolean{
+    const control = this.form.controls[controlName];
+    return control.invalid && (control.touched || control.dirty);
   }
   
 }
