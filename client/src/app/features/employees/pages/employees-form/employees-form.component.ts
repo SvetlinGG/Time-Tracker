@@ -3,7 +3,7 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { EmployeesStore } from '../../store/employees.store';
-import { ContractType } from '../../../../core/models/employee.model';
+import { ContractType, CreateEmployeeDto } from '../../../../core/models/employee.model';
 
 @Component({
   selector: 'app-employees-form',
@@ -33,7 +33,56 @@ export class EmployeesFormComponent implements OnInit {
     department: [''],
     hourlyRate: [0, [Validators.required, Validators.min(0)]],
     contractType: ['hourly' as ContractType, [Validators.required]],
-    standardDailyHours: []
-  })
+    standardDailyHours: [8, [Validators.required, Validators.min(1)]],
+    isActive: [true],
+    hireDate: ['', [Validators.required]],
+  });
+
+  ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+
+    if(!id){
+      return;
+    }
+
+    this.employeeId.set(id);
+
+    this.store.loadEmployeeById(id, employee => {
+      this.form.patchValue({
+        firstName: employee.firstName,
+        lastName: employee.lastName,
+        personalNumber: employee.personalNumber,
+        position: employee.position,
+        department: employee.department ?? '',
+        hourlyRate: employee.hourlyRate,
+        contractType: employee.contractType,
+        standardDailyHours: employee.standardDailyHours,
+        isActive: employee.isActive,
+        hireDate: employee.hireDate.slice(0, 10),
+      });
+    });
+  }
+
+  onSubmit(): void {
+    if(this.form.invalid){
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    const payload: CreateEmployeeDto = {
+      firstName: this.form.controls.firstName.getRawValue().trim(),
+      lastName: this.form.controls.lastName.getRawValue().trim(),
+      personalNumber: this.form.controls.personalNumber.getRawValue().trim(),
+      position: this.form.controls.position.getRawValue().trim(),
+      department: this.form.controls.department.getRawValue().trim(),
+      hourlyRate: Number(this.form.controls.hourlyRate.getRawValue()),
+      contractType: this.form.controls.contractType.getRawValue(),
+      standardDailyHours: Number(
+        this.form.controls.standardDailyHours.getRawValue()
+      ),
+      isActive: this.form.controls.isActive.getRawValue(),
+      hireDate: this.form.controls.hireDate.getRawValue(),
+    }
+  }
   
 }
