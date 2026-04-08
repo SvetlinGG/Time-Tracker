@@ -29,6 +29,18 @@ export const routes: Routes = [
                         m => m.EmployeesFormComponent)
             },
             {
+                path: 'employees/:id/edit',
+                loadComponent: () =>
+                    import('./features/employees/pages/employees-form/employees-form.component').then(
+                        m => m.EmployeesFormComponent
+                    ),
+            },
+            {
+                path: '',
+                redirectTo: 'dashboard',
+                pathMatch: 'full',
+            },
+            {
                 path: 'time-tracking',
                 loadComponent: () =>
                     import('./features/time-tracking/pages/time-entry-list/time-entry-list.component').then(
