@@ -24,11 +24,12 @@ export class EmployeesFormComponent implements OnInit {
   readonly contractTypes: ContractType[] = ['hourly', 'monthly', 'shift'];
   readonly submitting = this.store.submitting;
   readonly error = this.store.error;
+  readonly isEditMode = computed(() => this.employeeId() !== null);
 
   readonly form = this.fb.nonNullable.group({
     firstName: ['', [Validators.required, Validators.minLength(2)]],
-    lastName: ['', Validators.required, Validators.minLength(2)],
-    personalNumber: ['', Validators.required, Validators.minLength(3)],
+    lastName: ['', [Validators.required, Validators.minLength(2)]],
+    personalNumber: ['', [Validators.required, Validators.minLength(3)]],
     position: ['', [Validators.required]],
     department: [''],
     hourlyRate: [0, [Validators.required, Validators.min(0)]],
